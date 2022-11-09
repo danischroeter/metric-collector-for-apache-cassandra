@@ -452,17 +452,19 @@ public class UnixSocketClient {
     void addMetric(String name, Function<String, Integer> writer)
     {
         FilteringRule applied = FilteringRule.applyFilters(name, runtimeConfig.filtering_rules);
-        FilteringRule applied2 = FilteringRule.applyFilters(clean(name), runtimeConfig.filtering_rules);
+        //FilteringRule applied2 = FilteringRule.applyFilters(clean(name), runtimeConfig.filtering_rules);
 
         //Prefer globally denied rules
-        if (applied.isAllowRule != applied2.isAllowRule)
-        {
-            applied = applied.isAllowRule ? applied2 : applied;
-        }
-        else if (applied.isGlobal != applied2.isGlobal)
-        {
-            applied = applied.isGlobal ? applied : applied2;
-        }
+        //        if (applied.isAllowRule != applied2.isAllowRule)
+        //        {
+        //            applied = applied.isAllowRule ? applied2 : applied;
+        //        }
+        //        else if (applied.isGlobal != applied2.isGlobal)
+        //        {
+        //            applied = applied.isGlobal ? applied : applied2;
+        //        }
+
+        //do not do that! otherwise  deny[.*] matches bot filtered and unfiltered and causes chaos in rules since only if both variants overruled it will work as expected
 
         logger.debug("Using filtering rule {} for name '{}'", applied, name);
         ConcurrentHashMap<String, Function<String, Integer>> picked = null;
