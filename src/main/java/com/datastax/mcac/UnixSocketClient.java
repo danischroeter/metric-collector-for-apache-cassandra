@@ -464,7 +464,7 @@ public class UnixSocketClient {
             applied = applied.isGlobal ? applied : applied2;
         }
 
-        logger.trace("Using filtering rule {} for name '{}'", applied, name);
+        logger.debug("Using filtering rule {} for name '{}'", applied, name);
         ConcurrentHashMap<String, Function<String, Integer>> picked = null;
 
         if (applied.isAllowRule)
@@ -573,7 +573,7 @@ public class UnixSocketClient {
             }
             catch (IllegalArgumentException e)
             {
-                logger.debug("Unknown metric class", e);
+                logger.warn("initializing Metrics Reporting failed with "+e.getMessage(), e);
             }
         }
     }
